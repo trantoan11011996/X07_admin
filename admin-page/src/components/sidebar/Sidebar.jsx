@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { MenuItems } from "../MenuItem/MenuItems";
 import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
+import Users from "../../pages/Users/Users";
 const cx = classNames.bind(styles);
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
