@@ -4,6 +4,7 @@
 main {
   flex: 1;
   padding: 20px;
+  background: #e6e9f4;
 }
 .sidebar {
   background: #000;
@@ -12,6 +13,7 @@ main {
   width: 300px;
   transition: all 0.5s;
 }
+
 .top_section {
   display: flex;
   align-items: center;

@@ -39,7 +39,7 @@ const Sidebar = ({ children }) => {
             to={item.path}
             key={index}
             className={cx("link")}
-            activeclassName={cx("active")}
+            // activeClassName={cx("active")}
           >
             <div className={cx("icon")}>{item.icon}</div>
             <div
