@@ -1,0 +1,19 @@
+.add-user{
+    outline: none;
+    border: none;
+    background-color: rgb(8, 105, 209);
+    color: white;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.user-table-btn{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+.add-user:hover{
+    background-color: rgb(16, 120, 231);
+}
