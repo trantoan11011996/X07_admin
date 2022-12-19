@@ -2,22 +2,20 @@ import React from "react";
 import { Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
-import "../Users/userTable.css"
+import "../Users/userTable.css";
 import { useEffect } from "react";
 import Column from "antd/es/table/Column";
-
-
 
 const Users = () => {
   const { getAllUser, usersData } = useContext(AdminContext);
   const columns = [
     {
-      title : "Họ và Tên",
-      dataIndex : "info",
-      key : "name",
-      render : (item)=>{
-        return item ?  item.fullName ?? item.name : "admin"
-      }
+      title: "Họ và Tên",
+      dataIndex: "info",
+      key: "name",
+      render: (item) => {
+        return item ? item.fullName ?? item.name : "admin";
+      },
     },
     {
       title: "Email",
@@ -26,7 +24,7 @@ const Users = () => {
     },
     {
       title: "Phone",
-      dataIndex: ['info','phoneNumber'],
+      dataIndex: ["info", "phoneNumber"],
       key: "info",
     },
     {
@@ -40,19 +38,19 @@ const Users = () => {
           {text === "admin" && <a>Quản trị viên</a>}
         </>
       ),
-      filters : [
+      filters: [
         {
-          text : "recruiter",
-          value : "recruiter"
+          text: "recruiter",
+          value: "recruiter",
         },
         {
-          text : "candidate",
-          value : "candidate",
+          text: "candidate",
+          value: "candidate",
         },
         {
-          text : "admin",
-          value : "admin"
-        }
+          text: "admin",
+          value: "admin",
+        },
       ],
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
@@ -97,9 +95,13 @@ const Users = () => {
   return (
     <div className="user-table">
       <div className="user-table-btn">
-      <button className="add-user">Thêm mới</button>
+        <button className="add-user">Thêm mới</button>
       </div>
-    <Table dataSource={usersData} onChange={onChangeTable} columns={columns}></Table>
+      <Table
+        dataSource={usersData}
+        onChange={onChangeTable}
+        columns={columns}
+      ></Table>
     </div>
   );
 };

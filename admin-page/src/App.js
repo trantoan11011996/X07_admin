@@ -11,20 +11,20 @@ import { AuthContext } from "./components/AdminContext/Context";
 function App() {
   return (
     <AuthContext.Provider>
-    <AdminProvider>
-      <BrowserRouter>
-        <Header />
-        <Sidebar>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/user" element={<Users />} />
-            <Route path="/recruiment" element={<Recruiments />} />
-            <Route path="/field" element={<Fields />} />
-          </Routes>
-        </Sidebar>
-      </BrowserRouter>
-    </AdminProvider>
+      <AdminProvider>
+        <BrowserRouter>
+          <Header />
+          <Sidebar>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/user" element={<Users />} />
+              <Route path="/recruiment" element={<Recruiments />} />
+              <Route path="/field" element={<Fields />} />
+            </Routes>
+          </Sidebar>
+        </BrowserRouter>
+      </AdminProvider>
     </AuthContext.Provider>
   );
 }
