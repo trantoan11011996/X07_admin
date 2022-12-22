@@ -3,6 +3,7 @@ import { Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Users/userTable.css";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import Column from "antd/es/table/Column";
 
@@ -112,7 +113,9 @@ const Users = () => {
   return (
     <div className="user-table">
       <div className="user-table-btn">
-        <button className="add-user">Thêm mới</button>
+        <Link to="/createAdmin">
+          <button className="add-user">Thêm mới</button>
+        </Link>
       </div>
       <Table 
         className="table-antd"

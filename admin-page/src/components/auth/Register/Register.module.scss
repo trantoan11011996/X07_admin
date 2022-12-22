@@ -1,0 +1,117 @@
+body {
+  background: url("../../../assets/images/bg.jpg");
+  background-size: cover;
+  background-position-y: -80px;
+}
+.container {
+  width: 100%;
+  height: 90vh;
+
+  .wrapper_login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form {
+    width: 500px;
+    width: 500px;
+    background: rgba(0, 0, 0, 0.8) !important;
+    box-shadow: 0px 0px 17px 2px rgba(255, 255, 255, 0.8);
+
+    h1 {
+      text-transform: uppercase;
+      color: var(--white-color);
+    }
+
+    .form_group {
+      width: 100%;
+    }
+
+    .form_group label {
+      color: var(--white-color);
+      position: relative;
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+
+      .input_icon {
+        position: absolute;
+        color: #000;
+        font-size: 15px;
+        padding-right: 10px;
+        cursor: pointer;
+        top: 42%;
+        right: 0;
+      }
+      span {
+        color: var(--primary);
+      }
+    }
+    .form_group input {
+      padding: 8px 16px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      margin-top: 6px;
+      display: block;
+      width: 100%;
+      outline: none;
+
+      &:focus {
+        border-color: var(--primary);
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -ms-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+      }
+    }
+    .login_btn {
+      width: 100%;
+      button {
+        width: 100%;
+        cursor: pointer;
+        border: 1px solid var(--primary);
+        background: var(--primary);
+        color: var(--white-color);
+        padding: 6px 2px;
+        text-transform: uppercase;
+
+        &:hover {
+          background: var(--white-color);
+          color: var(--primary);
+          -webkit-transition: all 0.7s ease-in-out;
+          -moz-transition: all 0.7s ease-in-out;
+          -ms-transition: all 0.7s ease-in-out;
+          -o-transition: all 0.7s ease-in-out;
+          transition: all 0.7s ease-in-out;
+        }
+      }
+    }
+    .login_actions {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      a {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 0;
+      }
+    }
+
+    .role {
+      display: flex;
+      color: var(--white-color);
+      label {
+        padding-left: 8px;
+        padding-top: 4px;
+      }
+    }
+  }
+}

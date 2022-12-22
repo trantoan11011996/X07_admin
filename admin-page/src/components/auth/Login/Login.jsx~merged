@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+import React from "react";
+
+
+
+export default function Login(){
+    return (
+        <h1>dădawdawd</h1>
+    )
+}
+=======
 import React, { useState } from "react";
 import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
@@ -104,3 +115,4 @@ const Login = () => {
 };
 
 export default Login;
+>>>>>>> cdd38477c3217466d65c76758de821492435ae0f
