@@ -1,0 +1,51 @@
+.wrapper {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-bottom : 1px solid #ccc;
+  padding: 0 25px;
+}
+.wrapper-info-admin{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.logo{
+  
+}
+.info_admin{
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border : 1px solid red;
+  padding: 10px 15px;
+  border-radius: 15px;
+  border : 1px solid #ccc
+}
+.admin-content{
+  font-weight: 600;
+  cursor: pointer;
+}
+.info_admin:hover .logo-admin,
+.info_admin:hover .admin-content{
+    transform: scale(1.1);
+}
+.wrap-btn-logout{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.btn-logout{
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn-logout:hover{
+  background-color: rgb(16, 120, 231);
+  color: white;
+}

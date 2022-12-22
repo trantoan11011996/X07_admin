@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
@@ -8,7 +8,22 @@ import { useEffect } from "react";
 import Column from "antd/es/table/Column";
 
 const Users = () => {
-  const { getAllUser, usersData } = useContext(AdminContext);
+  const { getAllUser, usersData,updateStatusUser } = useContext(AdminContext);
+  const [selectedRowKeys, setSelectRowKeys] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [status,setStatus] = useState("")
+  useEffect(() => {
+    getAllUser();
+  }, []);
+  useEffect(()=>{
+    getAllUser()
+  },[status])
+
+  const hanldeUpdateStatus = (e,id)=>{
+     updateStatusUser(e.target.value,id)
+     setStatus(e.target.value)
+     getAllUser()
+  }
   const columns = [
     {
       title: "Họ và Tên",
@@ -26,7 +41,7 @@ const Users = () => {
     {
       title: "Phone",
       dataIndex: ["info", "phoneNumber"],
-      key: "info",
+      key: "phoneNumber",
     },
     {
       title: "Vai trò",
@@ -78,16 +93,18 @@ const Users = () => {
       onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
     {
-      title: "Action",
+      title: "Quản lí người dùng",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <button>Cập nhật</button>
-          <button>Khóa/mở khóa</button>
+          <button className="btn btn-update">Cập nhật</button>
+          <button className="btn btn-locked" value="locked" onClick={(e)=>hanldeUpdateStatus(e,record._id)}>Khóa</button>
+          <button className="btn btn-actived" value="active" onClick={(e)=>hanldeUpdateStatus(e,record._id)}>Mở khóa</button>
         </Space>
       ),
     },
   ];
+
   const onChangeTable = (pagination, filters, sorter) => {
     console.log("pagi", pagination);
     console.log("filter", filters);
@@ -100,10 +117,12 @@ const Users = () => {
           <button className="add-user">Thêm mới</button>
         </Link>
       </div>
-      <Table
+      <Table 
+        className="table-antd"
         dataSource={usersData}
         onChange={onChangeTable}
         columns={columns}
+        pagination={{defaultCurrent: 10 , pageSize : 5}}
       ></Table>
     </div>
   );
