@@ -1,26 +1,25 @@
 import React, { useState } from "react";
-import styles from "./Login.module.scss";
+import styles from "./Register.module.scss";
 import classNames from "classnames/bind";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { isEmpty, isEmail, isPassword } from "../../../utils/validate";
-import { useDispatch, useSelector } from "react-redux";
-
-import { ToastContainer, toast } from "react-toastify";
+import { isEmail, isEmpty, isPassword } from "../../../utils/validate";
+import { toast, ToastContainer } from "react-toastify";
 import MetaData from "../../MetaData/MetaData";
-import { loginAdmin } from "../../../Actions/authAction";
+import { useDispatch } from "react-redux";
+import { registerAdmin } from "../../../Actions/authAction";
 
 const cx = classNames.bind(styles);
 
-const Login = () => {
+const Register = () => {
   const initialState = {
     email: "",
     password: "",
+    role: "",
   };
-  const [visible, setVisible] = useState(false);
   const [data, setData] = useState(initialState);
-  const { email, password } = data;
-
+  const [visible, setVisible] = useState(false);
+  const { email, password, role } = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //Handle Even
@@ -30,28 +29,36 @@ const Login = () => {
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-  const handleSubmitLogin = (e) => {
+
+  const handleSubmitRegisterAdmin = (e) => {
     e.preventDefault();
     //check fields
-    if (isEmpty(email) || isEmpty(password))
+    if (isEmpty(email) || isEmpty(password) || isEmpty(role))
       return toast.warn("Vui lòng điền tất cả thông tin !");
     // check email
     if (!isEmail(email))
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
-
-    if (email && password) {
-      dispatch(loginAdmin(email, password, navigate));
+    //check length password
+    if (password.length < 6)
+      return toast.error("Mật khẩu phải lớn hơn 6 kí tự !");
+    //check password
+    if (!isPassword(password))
+      return toast.error(
+        "Mật khẩu phải ít nhất 8 kí tự, 1 chữ số,chữ in hoa và 1 ký tự đặc biệt !"
+      );
+    if (email && password && role) {
+      dispatch(registerAdmin(email, password, role, navigate));
     }
   };
 
   return (
     <>
       <ToastContainer />
-      <MetaData title="Đăng nhập" />
+      <MetaData title="Đăng ký" />
       <div className={cx("container")}>
         <div className={cx("wrapper_login")}>
-          <form onSubmit={handleSubmitLogin}>
-            <h1>Đăng nhập</h1>
+          <form onSubmit={handleSubmitRegisterAdmin}>
+            <h1>Đăng ký</h1>
 
             <div className={cx("form_group")}>
               <label htmlFor="email">
@@ -60,8 +67,8 @@ const Login = () => {
               <input
                 type="email"
                 name="email"
-                onChange={handleChange}
                 id="email"
+                onChange={handleChange}
                 placeholder="Vidu@gmail.com"
               />
             </div>
@@ -82,10 +89,23 @@ const Login = () => {
               </label>
             </div>
             <div className={cx("login_actions")}>
-              <div className={cx("register")}>
-                <Link to={"/register"}>Bạn chưa có tài khoản ?</Link>
+              <div className={cx("role")}>
+                <input
+                  type="radio"
+                  id="admin"
+                  name="role"
+                  value="admin"
+                  onChange={handleChange}
+                />
+                <label htmlFor="admin">Admin</label>
+              </div>
+              <div className={cx("role")}>
+                <div className={cx("register")}>
+                  <Link to={"/login"}>Bạn đã có tài khoản ?</Link>
+                </div>
               </div>
             </div>
+
             <div className={cx("login_btn")}>
               {/* {loading ? (
               <button type="submit" disabled>
@@ -94,7 +114,7 @@ const Login = () => {
             ) : (
              
             )} */}
-              <button type="submit">Đăng nhập</button>
+              <button type="submit">Đăng ký</button>
             </div>
           </form>
         </div>
@@ -103,4 +123,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
