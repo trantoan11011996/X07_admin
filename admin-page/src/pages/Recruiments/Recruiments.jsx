@@ -7,7 +7,8 @@ const Recruiments = () => {
   const { getAllRecruiment, recruimentData } = useContext(AdminContext);
 
   useEffect(() => {
-    getAllRecruiment();
+    const tokenLocal = JSON.parse(localStorage.getItem('token'))
+    getAllRecruiment(tokenLocal);
   }, []);
   const columns = [
     {
