@@ -1,4 +1,8 @@
-.add-user{
+.table-antd{
+    margin: 0 auto;
+    border : 1px solid #ccc
+}
+.add-field{
     outline: none;
     border: none;
     background-color: rgb(8, 105, 209);
@@ -9,22 +13,11 @@
     cursor: pointer;
     font-size: 20px;
 }
-.user-table-btn{
+.field-table-btn{
     display: flex;
     justify-content: flex-end;
     flex-direction: row;
 }
-.add-user:hover{
-    background-color: rgb(16, 120, 231);
-}
-.btn{
-    background-color: rgb(8, 105, 209);
-    border : none;
-    border-radius: 10px;
-    padding: 10px 15px;
-    color: white;
-    cursor: pointer;
-}
-.btn:hover{
+.add-field{
     background-color: rgb(16, 120, 231);
 }
