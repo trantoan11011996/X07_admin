@@ -7,7 +7,8 @@ const Fields = () => {
   const { getAllFields, fielData } = useContext(AdminContext);
 
   useEffect(() => {
-    getAllFields();
+    const tokenLocal = JSON.parse(localStorage.getItem('token'))
+    getAllFields(tokenLocal);
   }, []);
   const columns = [
     {

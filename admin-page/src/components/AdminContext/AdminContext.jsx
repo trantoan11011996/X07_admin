@@ -5,34 +5,35 @@ import adminApi from "../adminAction/AdminAction";
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlZGEzZjQ3NzNjOTgyZmIwYjMwOCIsImlhdCI6MTY3MTcxNjc1NSwiZXhwIjoxNjcxODAzMTU1fQ.08dxF8kKLOUT-2FSNXKRwSU6SZc8ftXKv6wBobq2zSI'
 const AdminContext = createContext();
 const url = 'https://xjob-mindx-production.up.railway.app/api'
-const tokenLocal = JSON.parse(localStorage.getItem('token'))
 
 const AdminProvider = ({children}) =>{
     const [usersData,setUsersData] = useState([])
     const [recruimentData,setRecruimentData]= useState([])
     const [fielData,setFielData] = useState([])
-    
+    const [token,setToken] = useState("")
 
-    const getAllUser = async ()=>{
+
+    const getAllUser = async (token)=>{
         const getUsers = await fetch ('https://xjob-mindx-production.up.railway.app/api/admin/users',{
             method : "GET",
             headers:{
-                "authorization" : `Bearer ${tokenLocal}`
+                "authorization" : `Bearer ${token}`
             }
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
+            console.log('data',data);
             setUsersData(data)
             localStorage.setItem('allUsers',JSON.stringify(data))
             return data
         })
         return getUsers
     }
-    const getAllRecruiment = async()=>{
+    const getAllRecruiment = async(token)=>{
         const getRecruiments = await fetch ('https://xjob-mindx-production.up.railway.app/api/admin/recruiments',{
             method : "GET",
             headers:{
-                "authorization" : `Bearer ${tokenLocal}`
+                "authorization" : `Bearer ${token}`
             }
         }).then((res)=>{
             return res.json()
@@ -54,7 +55,7 @@ const AdminProvider = ({children}) =>{
                 headers :{
                     "Content-Type": "application/json",
                     Accept: "application/json",
-                    "authorization" : `Bearer ${tokenLocal}`
+                    "authorization" : `Bearer ${token}`
                 }
             }).then((res)=>{
                 return res.json()
@@ -63,20 +64,19 @@ const AdminProvider = ({children}) =>{
             })
         return updateStatus
     }
-    const getAllFields = async()=>{
-        
+    const getAllFields = async(token)=>{
         const allFields = await fetch(`${url}/admin/category`,{
             method : "GET",
             headers :{
                 "Content-Type": "application/json",
                 Accept: "application/json",
-                "authorization" : `Bearer ${tokenLocal}`
+                "authorization" : `Bearer ${token}`
             }
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
-            console.log(data);
             setFielData(data)
+            localStorage.setItem('allField',JSON.stringify(data))
             return data
         })
         return allFields
@@ -95,11 +95,21 @@ const AdminProvider = ({children}) =>{
         }
         return allRecruiment
     }
+    const autoGetField = ()=>{
+        const allField = adminApi.autoGetFields()
+        if(!allField){
+            return
+        }
+        return allField
+    }
     useEffect(()=>{
-        const allUsers = autoGetAllUsers()
+        const tokenLocal = JSON.parse(localStorage.getItem('token'))
+        const allUsers = autoGetAllUsers(tokenLocal)
         setUsersData(allUsers)
-        const allRecruiment = autoGetAllRecruiment()
+        const allRecruiment = autoGetAllRecruiment(tokenLocal)
         setRecruimentData(allRecruiment)
+        const allField = autoGetField(tokenLocal)
+        setFielData(allField)
         
     },[])
     const value = {
@@ -109,7 +119,9 @@ const AdminProvider = ({children}) =>{
         recruimentData,
         updateStatusUser,
         getAllFields,
-        fielData
+        fielData,
+        token,
+        setToken
     }
     return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
 } 

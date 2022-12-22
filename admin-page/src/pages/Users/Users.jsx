@@ -8,21 +8,23 @@ import { useEffect } from "react";
 import Column from "antd/es/table/Column";
 
 const Users = () => {
-  const { getAllUser, usersData,updateStatusUser } = useContext(AdminContext);
+  const { getAllUser, usersData,updateStatusUser,token,setToken } = useContext(AdminContext);
   const [selectedRowKeys, setSelectRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status,setStatus] = useState("")
-  useEffect(() => {
-    getAllUser();
-  }, []);
   useEffect(()=>{
-    getAllUser()
+    const tokenLocal = JSON.parse(localStorage.getItem('token'))
+    getAllUser(tokenLocal)
   },[status])
-
+ useEffect(()=>{
+  const tokenLocal = JSON.parse(localStorage.getItem('token'))
+  setToken(tokenLocal)
+ },[])
   const hanldeUpdateStatus = (e,id)=>{
      updateStatusUser(e.target.value,id)
      setStatus(e.target.value)
-     getAllUser()
+     console.log(token);
+     getAllUser(token)
   }
   const columns = [
     {
@@ -124,6 +126,7 @@ const Users = () => {
         columns={columns}
         pagination={{defaultCurrent: 10 , pageSize : 5}}
       ></Table>
+      <></>
     </div>
   );
 };

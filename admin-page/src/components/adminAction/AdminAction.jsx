@@ -3,12 +3,17 @@
     return jsonUser ? JSON.parse(jsonUser) : []
  }
  export const autoGetRecruiment = ()=>{
-    const jsonUser = localStorage.getItem("allRecruiment")
-    return jsonUser ? JSON.parse(jsonUser) : []
+    const jsonRecuiment = localStorage.getItem("allRecruiment")
+    return jsonRecuiment ? JSON.parse(jsonRecuiment) : []
  }
+ export const autoGetFields = ()=>{
+   const jsonFields = localStorage.getItem("allField")
+   return jsonFields ? JSON.parse(jsonFields) : []
+}
  const adminApi = {
     autoLogin : autoLogin,
-    autoGetRecruiment:autoGetRecruiment
+    autoGetRecruiment:autoGetRecruiment,
+    autoGetFields : autoGetFields
  }
 
  export default adminApi
