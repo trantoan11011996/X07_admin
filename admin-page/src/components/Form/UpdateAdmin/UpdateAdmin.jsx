@@ -10,9 +10,10 @@ const UpdateAdmin = () => {
   const initialState = {
     name: "",
     phoneNumber: "",
+    password: "",
   };
   const [data, setData] = useState(initialState);
-  const { name, phoneNumber } = data;
+  const { name, phoneNumber, password } = data;
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -23,11 +24,12 @@ const UpdateAdmin = () => {
     const data = {
       name: name,
       phoneNumber: phoneNumber,
+      password: password,
     };
     if (isEmpty(name) || isEmpty(phoneNumber)) {
       toast.warn("Không được để trống các trường !");
     }
-    if (phoneNumber && name) {
+    if (phoneNumber && name && password) {
       console.log("data", data);
     }
   };
@@ -66,6 +68,16 @@ const UpdateAdmin = () => {
               type="text"
               id="phoneNumber"
               name="phoneNumber"
+              className="form_input"
+              onChange={handleChange}
+            />
+          </div>
+          <div className={cx("form_group")}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
               className="form_input"
               onChange={handleChange}
             />
