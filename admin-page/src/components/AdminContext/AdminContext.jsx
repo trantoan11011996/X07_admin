@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import adminApi from "../adminAction/AdminAction";
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlZGEzZjQ3NzNjOTgyZmIwYjMwOCIsImlhdCI6MTY3MTYyODA3NCwiZXhwIjoxNjcxNzE0NDc0fQ.HGrXgAfCdqfiNH0a921xqvRCPwPNnm-ok9Ws_vG_ZFY'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlZGEzZjQ3NzNjOTgyZmIwYjMwOCIsImlhdCI6MTY3MTcxNjc1NSwiZXhwIjoxNjcxODAzMTU1fQ.08dxF8kKLOUT-2FSNXKRwSU6SZc8ftXKv6wBobq2zSI'
 const AdminContext = createContext();
 const url = 'https://xjob-mindx-production.up.railway.app/api'
 
