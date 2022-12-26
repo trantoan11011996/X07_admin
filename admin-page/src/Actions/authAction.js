@@ -4,9 +4,7 @@ import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  REGISTER_ADMIN_FAIL,
-  REGISTER_ADMIN_REQUEST,
-  REGISTER_ADMIN_SUCCESS,
+  LOGOUT,
 } from "../Constants/authConstant";
 
 export const loginAdmin = (email, password, navigate) => async (dispatch) => {
@@ -28,25 +26,10 @@ export const loginAdmin = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
   }
 };
-
-export const registerAdmin =
-  (email, password, role, navigate) => async (dispatch) => {
-    try {
-      dispatch({ type: REGISTER_ADMIN_REQUEST });
-      const config = { headers: { "Content-Type": "application/json" } };
-      const { data } = await axios.post(
-        "https://xjob-mindx-production.up.railway.app/api/admin/users",
-        { email, password, role },
-        config
-      );
-
-      dispatch({ type: REGISTER_ADMIN_SUCCESS, payload: data });
-      navigate("/login");
-    } catch (error) {
-      toast.error(error.response.data.message);
-      dispatch({
-        type: REGISTER_ADMIN_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+export const logoutUser = (navigate) => async (dispatch) => {
+  dispatch({ type: LOGOUT });
+  localStorage.removeItem("currentAdmin");
+  localStorage.removeItem("token");
+  dispatch({ type: LOGOUT, payload: null });
+  navigate("/login");
+};

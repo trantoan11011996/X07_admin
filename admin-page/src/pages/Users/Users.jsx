@@ -8,24 +8,25 @@ import { useEffect } from "react";
 import Column from "antd/es/table/Column";
 
 const Users = () => {
-  const { getAllUser, usersData,updateStatusUser,token,setToken } = useContext(AdminContext);
+  const { getAllUser, usersData, updateStatusUser, token, setToken } =
+    useContext(AdminContext);
   const [selectedRowKeys, setSelectRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [status,setStatus] = useState("")
-  useEffect(()=>{
-    const tokenLocal = JSON.parse(localStorage.getItem('token'))
-    getAllUser(tokenLocal)
-  },[status])
- useEffect(()=>{
-  const tokenLocal = JSON.parse(localStorage.getItem('token'))
-  setToken(tokenLocal)
- },[])
-  const hanldeUpdateStatus = (e,id)=>{
-     updateStatusUser(e.target.value,id)
-     setStatus(e.target.value)
-     console.log(token);
-     getAllUser(token)
-  }
+  const [status, setStatus] = useState("");
+  useEffect(() => {
+    const tokenLocal = JSON.parse(localStorage.getItem("token"));
+    getAllUser(tokenLocal);
+  }, [status]);
+  useEffect(() => {
+    const tokenLocal = JSON.parse(localStorage.getItem("token"));
+    setToken(tokenLocal);
+  }, []);
+  const hanldeUpdateStatus = (e, id) => {
+    updateStatusUser(e.target.value, id);
+    setStatus(e.target.value);
+    console.log(token);
+    getAllUser(token);
+  };
   const columns = [
     {
       title: "Họ và Tên",
@@ -100,8 +101,20 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           <button className="btn btn-update">Cập nhật</button>
-          <button className="btn btn-locked" value="locked" onClick={(e)=>hanldeUpdateStatus(e,record._id)}>Khóa</button>
-          <button className="btn btn-actived" value="active" onClick={(e)=>hanldeUpdateStatus(e,record._id)}>Mở khóa</button>
+          <button
+            className="btn btn-locked"
+            value="locked"
+            onClick={(e) => hanldeUpdateStatus(e, record._id)}
+          >
+            Khóa
+          </button>
+          <button
+            className="btn btn-actived"
+            value="active"
+            onClick={(e) => hanldeUpdateStatus(e, record._id)}
+          >
+            Mở khóa
+          </button>
         </Space>
       ),
     },
@@ -119,12 +132,12 @@ const Users = () => {
           <button className="add-user">Thêm mới</button>
         </Link>
       </div>
-      <Table 
+      <Table
         className="table-antd"
         dataSource={usersData}
         onChange={onChangeTable}
         columns={columns}
-        pagination={{defaultCurrent: 10 , pageSize : 5}}
+        pagination={{ defaultCurrent: 10, pageSize: 5 }}
       ></Table>
       <></>
     </div>
