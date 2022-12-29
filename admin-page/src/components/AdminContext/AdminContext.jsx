@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import adminApi from "../adminAction/AdminAction";
+import { getApiHost } from "../../config";
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlZGEzZjQ3NzNjOTgyZmIwYjMwOCIsImlhdCI6MTY3MTcxNjc1NSwiZXhwIjoxNjcxODAzMTU1fQ.08dxF8kKLOUT-2FSNXKRwSU6SZc8ftXKv6wBobq2zSI'
 const AdminContext = createContext();
 const url = 'https://xjob-mindx-production.up.railway.app/api'
@@ -46,7 +47,7 @@ const AdminProvider = ({children}) =>{
     },[])
 
     const getAllUser = async (token)=>{
-        const getUsers = await fetch ('https://xjob-mindx-production.up.railway.app/api/admin/users',{
+        const getUsers = await fetch (getApiHost() + 'admin/users',{
             method : "GET",
             headers:{
                 "authorization" : `Bearer ${token}`
@@ -61,7 +62,7 @@ const AdminProvider = ({children}) =>{
         return getUsers
     }
     const getAllRecruiment = async(token)=>{
-        const getRecruiments = await fetch ('https://xjob-mindx-production.up.railway.app/api/admin/recruiments',{
+        const getRecruiments = await fetch (getApiHost() + 'admin/recruiments',{
             method : "GET",
             headers:{
                 "authorization" : `Bearer ${token}`
@@ -69,6 +70,7 @@ const AdminProvider = ({children}) =>{
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
+            console.log('data',data.recruiment);
             setRecruimentData(data.recruiment)
             localStorage.setItem('allRecruiment',JSON.stringify(data.recruiment))
             return data.recruiment
@@ -80,7 +82,7 @@ const AdminProvider = ({children}) =>{
                 "status" : status
             }
             console.log(statusJson,id);
-            const updateStatus = await fetch (`${url}/admin/users/${id}`,{
+            const updateStatus = await fetch (getApiHost() + `admin/users/${id}`,{
                 method : "PUT",
                 body: JSON.stringify(statusJson),
                 headers :{
@@ -96,7 +98,7 @@ const AdminProvider = ({children}) =>{
         return updateStatus
     }
     const getAllFields = async(token)=>{
-        const allFields = await fetch(`${url}/admin/category`,{
+        const allFields = await fetch(getApiHost() + `admin/category`,{
             method : "GET",
             headers :{
                 "Content-Type": "application/json",
@@ -115,7 +117,7 @@ const AdminProvider = ({children}) =>{
     
     const createCategoryContext = async (category,token) =>{
         const newCategory = adminApi.createCategory(category)
-        const fetchApiCateory = await fetch(`${url}/admin/category`,{
+        const fetchApiCateory = await fetch(getApiHost() + `admin/category`,{
             method :'POST',
             body : JSON.stringify(newCategory),
             headers : {
@@ -131,7 +133,7 @@ const AdminProvider = ({children}) =>{
         return fetchApiCateory
     }
     const getDetailRecruiment = async(id)=>{
-        const detailRecruiment = await fetch(`${url}/recruiments/detail/${id}`,{
+        const detailRecruiment = await fetch(`${getApiHost}/recruiments/detail/${id}`,{
             method : "GET"
         }).then((res)=>{
             return res.json()
