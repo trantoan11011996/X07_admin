@@ -31,6 +31,36 @@ const Recruiments = () => {
       key: "salary",
     },
     {
+      title : "Số lượng ứng viên",
+      dataIndex : "numberApplicant",
+      key : "numberApplicant",
+      // render : (text)=>{
+      //   let txtToNumb = text.toString()
+      //   return(
+      //     <></>
+      //     // <p>{txtToNumb}</p>
+      //   )
+      // }
+    },
+    {
+      title : "Vị trí công việc",
+      dataIndex : "position",
+      key : "position"
+    },
+    {
+      title : "Yêu cầu thời gian làm việc",
+      dataIndex : "type",
+      key : "type"
+    },
+    {
+      title : "Yêu cầu kinh nghiệm",
+      dataIndex : "experience",
+      key : "experience"
+    },
+    {
+
+    },
+    {
       title: "Địa điểm tuyển dụng",
       dataIndex: ["location", "name"],
       key: "location",
@@ -67,23 +97,11 @@ const Recruiments = () => {
       render: (_, record) => (
         <Space size="middle">
           <button className="btn btn-delete">Xóa</button>
-          <Link to={"/recruimentDetail/" + record._id}>
-            <button
-              className="btn btn-detail"
-              onClick={() => handleGetDetail(record._id)}
-            >
-              Xem chi tiết
-            </button>
-          </Link>
         </Space>
       ),
     },
   ];
 
-  const handleGetDetail = (id) => {
-    getDetailRecruiment(id);
-    setShowDetailTable(true)
-  };
   return (
     <div className="table-recruiment">
       <Table
