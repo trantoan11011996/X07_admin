@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getApiHost } from "../config";
 import {
   CREATE_ADMIN_FAIL,
   CREATE_ADMIN_REQUEST,
@@ -13,7 +14,8 @@ export const createAdmin =
     try {
       dispatch({ type: CREATE_ADMIN_REQUEST });
       const { data } = await axios.post(
-        "https://xjob-mindx-production.up.railway.app/api/admin/users",
+        // "https://xjob-mindx-production.up.railway.app/api/admin/users",
+        getApiHost() + "admin/users",
         { email, password, role },
         {
           headers: { Authorization: `Bearer ${token}` },

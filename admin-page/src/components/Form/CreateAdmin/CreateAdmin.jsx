@@ -41,12 +41,6 @@ const CreateAdmin = () => {
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
     if (email && password && role) {
       dispatch(createAdmin(email, password, role, token, navigate));
-      // const data = {
-      //   email: email,
-      //   password: password,
-      //   role: role,
-      // };
-      // console.log({ data });
     }
   };
   return (

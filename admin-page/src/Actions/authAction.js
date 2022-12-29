@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getApiHost } from "../config";
 import {
   LOGIN_FAIL,
   LOGIN_REQUEST,
@@ -12,7 +13,8 @@ export const loginAdmin = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "https://xjob-mindx-production.up.railway.app/api/users/login",
+      // "https://xjob-mindx-production.up.railway.app/api/users/login",
+      getApiHost() + "users/login",
       { email, password },
       config
     );
