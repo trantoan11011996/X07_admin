@@ -4,6 +4,7 @@ import CreateAdmin from "../components/Form/CreateAdmin/CreateAdmin";
 import UpdateAdmin from "../components/Form/UpdateAdmin/UpdateAdmin";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Fields from "../pages/Fields/Fields";
+import RecruimentDetail from "../pages/Recruiments/RecruimentDetail";
 import Recruiments from "../pages/Recruiments/Recruiments";
 import Users from "../pages/Users/Users";
 
@@ -42,6 +43,10 @@ const publicRoute = [
     component: Register,
     layout: null,
   },
+  {
+    path : "/recruimentDetail/:idRecruiment",
+    component : RecruimentDetail,
+  }
 ];
 
 export { publicRoute };

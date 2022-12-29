@@ -10,10 +10,15 @@
    const jsonFields = localStorage.getItem("allField")
    return jsonFields ? JSON.parse(jsonFields) : []
 }
+export const createCategory = (category)=>{
+   const newCategory = {"name" : category}
+   return newCategory
+}
  const adminApi = {
     autoLogin : autoLogin,
     autoGetRecruiment:autoGetRecruiment,
-    autoGetFields : autoGetFields
+    autoGetFields : autoGetFields,
+    createCategory : createCategory
  }
 
  export default adminApi
