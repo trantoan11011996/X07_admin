@@ -9,9 +9,41 @@ const url = 'https://xjob-mindx-production.up.railway.app/api'
 const AdminProvider = ({children}) =>{
     const [usersData,setUsersData] = useState([])
     const [recruimentData,setRecruimentData]= useState([])
-    const [fielData,setFielData] = useState([])
+    const [fieldData,setFieldData] = useState([])
     const [token,setToken] = useState("")
+    const [detailJob,setDetailJob] = useState({})
 
+    const autoGetAllUsers = ()=>{
+        const allUsers = adminApi.autoLogin()
+        if(!allUsers){
+            return
+        }
+        return allUsers
+    }
+    const autoGetAllRecruiment = ()=>{
+        const allRecruiment = adminApi.autoGetRecruiment()
+        if(!allRecruiment){
+            return
+        }
+        return allRecruiment
+    }
+    const autoGetField = ()=>{
+        const allField = adminApi.autoGetFields()
+        if(!allField){
+            return
+        }
+        return allField
+    }
+    useEffect(()=>{
+        const tokenLocal = JSON.parse(localStorage.getItem('token'))
+        const allUsers = autoGetAllUsers(tokenLocal)
+        setUsersData(allUsers)
+        const allRecruiment = autoGetAllRecruiment(tokenLocal)
+        setRecruimentData(allRecruiment)
+        const allField = autoGetField(tokenLocal)
+        setFieldData(allField)
+        
+    },[])
 
     const getAllUser = async (token)=>{
         const getUsers = await fetch ('https://xjob-mindx-production.up.railway.app/api/admin/users',{
@@ -22,7 +54,6 @@ const AdminProvider = ({children}) =>{
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
-            console.log('data',data);
             setUsersData(data)
             localStorage.setItem('allUsers',JSON.stringify(data))
             return data
@@ -75,43 +106,42 @@ const AdminProvider = ({children}) =>{
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
-            setFielData(data)
+            setFieldData(data)
             localStorage.setItem('allField',JSON.stringify(data))
             return data
         })
         return allFields
     }
-    const autoGetAllUsers = ()=>{
-        const allUsers = adminApi.autoLogin()
-        if(!allUsers){
-            return
-        }
-        return allUsers
+    
+    const createCategoryContext = async (category,token) =>{
+        const newCategory = adminApi.createCategory(category)
+        const fetchApiCateory = await fetch(`${url}/admin/category`,{
+            method :'POST',
+            body : JSON.stringify(newCategory),
+            headers : {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "authorization" : `Bearer ${token}`
+            }
+        }).then((res)=>{
+            return res.json()  
+        }).then((data)=>{
+            return data
+        })
+        return fetchApiCateory
     }
-    const autoGetAllRecruiment = ()=>{
-        const allRecruiment = adminApi.autoGetRecruiment()
-        if(!allRecruiment){
-            return
-        }
-        return allRecruiment
+    const getDetailRecruiment = async(id)=>{
+        const detailRecruiment = await fetch(`${url}/recruiments/detail/${id}`,{
+            method : "GET"
+        }).then((res)=>{
+            return res.json()
+        }).then((data)=>{
+            localStorage.setItem("detailJob",JSON.stringify(data))
+            setDetailJob(data)
+            return data
+        })
+        return detailRecruiment
     }
-    const autoGetField = ()=>{
-        const allField = adminApi.autoGetFields()
-        if(!allField){
-            return
-        }
-        return allField
-    }
-    useEffect(()=>{
-        const tokenLocal = JSON.parse(localStorage.getItem('token'))
-        const allUsers = autoGetAllUsers(tokenLocal)
-        setUsersData(allUsers)
-        const allRecruiment = autoGetAllRecruiment(tokenLocal)
-        setRecruimentData(allRecruiment)
-        const allField = autoGetField(tokenLocal)
-        setFielData(allField)
-        
-    },[])
     const value = {
         getAllUser,
         usersData,
@@ -119,9 +149,14 @@ const AdminProvider = ({children}) =>{
         recruimentData,
         updateStatusUser,
         getAllFields,
-        fielData,
+        fieldData,
+        setFieldData,
         token,
-        setToken
+        setToken,
+        createCategoryContext,
+        getDetailRecruiment,
+        detailJob,
+        setDetailJob
     }
     return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
 } 
