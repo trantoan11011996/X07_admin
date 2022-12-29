@@ -108,6 +108,7 @@ const AdminProvider = ({children}) =>{
         }).then((res)=>{
             return res.json()
         }).then((data)=>{
+            console.log('data',data);
             setFieldData(data)
             localStorage.setItem('allField',JSON.stringify(data))
             return data
@@ -133,7 +134,7 @@ const AdminProvider = ({children}) =>{
         return fetchApiCateory
     }
     const getDetailRecruiment = async(id)=>{
-        const detailRecruiment = await fetch(`${getApiHost}/recruiments/detail/${id}`,{
+        const detailRecruiment = await fetch(getApiHost() + `recruiments/detail/${id}`,{
             method : "GET"
         }).then((res)=>{
             return res.json()
@@ -142,7 +143,7 @@ const AdminProvider = ({children}) =>{
             setDetailJob(data)
             return data
         })
-        return detailRecruiment
+        return detailRecruiment 
     }
     const value = {
         getAllUser,
