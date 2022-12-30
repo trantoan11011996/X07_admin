@@ -12,7 +12,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auths);
-  console.log(user);
+
   const handleLogoutUser = (e) => {
     e.preventDefault();
 

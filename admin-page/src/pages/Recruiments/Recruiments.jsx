@@ -5,15 +5,22 @@ import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Recruiments/recruimentTable.css";
 import { Link } from "react-router-dom";
 import RecruimentDetail from "./RecruimentDetail";
+import { useDispatch, useSelector } from "react-redux";
 
 const Recruiments = () => {
   const { getAllRecruiment, recruimentData, getDetailRecruiment } =
     useContext(AdminContext);
-  const [showDetailTable,setShowDetailTable] = useState(false)
+  const { token } = useSelector((state) => state.auths.user);
+  const dispatch = useDispatch();
+  const [showDetailTable, setShowDetailTable] = useState(false);
   useEffect(() => {
     const tokenLocal = JSON.parse(localStorage.getItem("token"));
     getAllRecruiment(tokenLocal);
   }, []);
+
+  const handleDeleteRecruiment = (id) => {
+    dispatch(id, token);
+  };
   const columns = [
     {
       title: "Tiêu đề tin",
@@ -66,7 +73,12 @@ const Recruiments = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <button className="btn btn-delete">Xóa</button>
+          <button
+            className="btn btn-delete"
+            onClick={() => handleDeleteRecruiment(record._id)}
+          >
+            Xóa
+          </button>
           <Link to={"/recruimentDetail/" + record._id}>
             <button
               className="btn btn-detail"
@@ -82,7 +94,7 @@ const Recruiments = () => {
 
   const handleGetDetail = (id) => {
     getDetailRecruiment(id);
-    setShowDetailTable(true)
+    setShowDetailTable(true);
   };
   return (
     <div className="table-recruiment">
