@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Users/userTable.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Column from "antd/es/table/Column";
 
@@ -13,6 +14,8 @@ const Users = () => {
   const [selectedRowKeys, setSelectRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const tokenLocal = JSON.parse(localStorage.getItem("token"));
     getAllUser(tokenLocal);
@@ -27,6 +30,8 @@ const Users = () => {
     console.log(token);
     getAllUser(token);
   };
+
+  const handleUpdateUser = (id) => {};
   const columns = [
     {
       title: "Họ và Tên",
@@ -100,7 +105,12 @@ const Users = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <button className="btn btn-update">Cập nhật</button>
+          <button
+            className="btn btn-update"
+            onClick={() => handleUpdateUser(record._id)}
+          >
+            Cập nhật
+          </button>
           <button
             className="btn btn-locked"
             value="locked"

@@ -4,43 +4,43 @@ import classNames from "classnames/bind";
 import MetaData from "../../MetaData/MetaData";
 import { toast, ToastContainer } from "react-toastify";
 import { isEmpty } from "../../../utils/validate";
+import { useDispatch, useSelector } from "react-redux";
+import { updateInfoAdmin } from "../../../Actions/adminAction";
 const cx = classNames.bind(styles);
 
-const UpdateAdmin = () => {
+const InfoAdmin = () => {
+  const { user } = useSelector((state) => state.auths);
   const initialState = {
     name: "",
     phoneNumber: "",
-    password: "",
+    email: user?.email,
   };
   const [data, setData] = useState(initialState);
-  const { name, phoneNumber, password } = data;
+  const { name, phoneNumber, email } = data;
 
+  const { token } = useSelector((state) => state.auths.user);
+  const dispatch = useDispatch();
+
+  //handle even update info admin
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmitUpdateAdmin = (e) => {
+  const handleChangeInfoAdmin = (e) => {
     e.preventDefault();
-    const data = {
-      name: name,
-      phoneNumber: phoneNumber,
-      password: password,
-    };
-    if (isEmpty(name) || isEmpty(phoneNumber)) {
-      toast.warn("Không được để trống các trường !");
-    }
-    if (phoneNumber && name && password) {
-      console.log("data", data);
-    }
+
+    const info = { name, email, phoneNumber };
+
+    dispatch(updateInfoAdmin(token, { info }));
   };
   return (
     <>
       <MetaData title="Cập nhật Admin" />
       <ToastContainer />
       <div className={cx("form_container")}>
-        <form onSubmit={handleSubmitUpdateAdmin}>
+        <form onSubmit={handleChangeInfoAdmin}>
           <div className={cx("title")}>
-            <h1>Chỉnh sửa Admin</h1>
+            <h1>Thông tin quản trị viên</h1>
           </div>
           <div className={cx("form_group")}>
             <label htmlFor="name">Họ và tên</label>
@@ -59,7 +59,8 @@ const UpdateAdmin = () => {
               id="email"
               className="form_input"
               disabled
-              value="Quang Minh"
+              value={user?.email}
+              onChange={handleChange}
             />
           </div>
           <div className={cx("form_group")}>
@@ -72,19 +73,18 @@ const UpdateAdmin = () => {
               onChange={handleChange}
             />
           </div>
-          <div className={cx("form_group")}>
+          {/* <div className={cx("form_group")}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               name="password"
               className="form_input"
-              onChange={handleChange}
             />
-          </div>
+          </div> */}
 
           <div className={cx("form_group")}>
-            <button type="submit">Hoàn tất</button>
+            <button type="submit">Chỉnh sửa thông tin cá nhân</button>
           </div>
         </form>
       </div>
@@ -92,4 +92,4 @@ const UpdateAdmin = () => {
   );
 };
 
-export default UpdateAdmin;
+export default InfoAdmin;

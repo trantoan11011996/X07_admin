@@ -14,8 +14,7 @@ const Dashboard = () => {
   }, [isAuthenticated]);
   return (
     <div>
-      Dashboard
-      <h1>đasadasdas</h1>
+      <h1>Dashboard</h1>
     </div>
   );
 };
