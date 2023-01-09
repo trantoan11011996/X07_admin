@@ -7,6 +7,7 @@ import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
 import Users from "../../pages/Users/Users";
 import Header from "../Header/Header";
+import MetaData from "../MetaData/MetaData";
 const cx = classNames.bind(styles);
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,7 @@ const Sidebar = ({ children }) => {
 
   return (
     <>
+    <MetaData title="Dashboard"/>
       <Header />
       <div className={cx("container")}>
         <div
