@@ -1,7 +1,7 @@
 import Login from "../components/auth/Login/Login";
 import Register from "../components/auth/Register/Register";
 import CreateAdmin from "../components/Form/CreateAdmin/CreateAdmin";
-import UpdateAdmin from "../components/Form/UpdateAdmin/UpdateAdmin";
+import InfoAdmin from "../components/Form/InfoAdmin/InfoAdmin";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Fields from "../pages/Fields/Fields";
 import RecruimentDetail from "../pages/Recruiments/RecruimentDetail";
@@ -31,7 +31,7 @@ const publicRoute = [
   },
   {
     path: "/updateAdmin",
-    component: UpdateAdmin,
+    component: InfoAdmin,
   },
   {
     path: "/login",
@@ -44,9 +44,9 @@ const publicRoute = [
     layout: null,
   },
   {
-    path : "/recruimentDetail/:idRecruiment",
-    component : RecruimentDetail,
-  }
+    path: "/recruimentDetail/:idRecruiment",
+    component: RecruimentDetail,
+  },
 ];
 
 export { publicRoute };
