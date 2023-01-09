@@ -66,8 +66,9 @@ const Recruiments = () => {
       key: "salary",
     },
     {
-      title: "Số lượng ứng viên",
+      title: "Nhu cầu",
       dataIndex: "numberApplicant",
+      width: 50,
       key: "numberApplicant",
       // render : (text)=>{
       //   let txtToNumb = text.toString()
@@ -78,23 +79,27 @@ const Recruiments = () => {
       // }
     },
     {
-      title: "Vị trí công việc",
+      title: "Vị trí",
       dataIndex: "position",
       key: "position",
     },
     {
-      title: "Yêu cầu thời gian làm việc",
+      title: "Hình thức làm việc",
       dataIndex: "type",
       key: "type",
+      render: (text) => {
+        return <>{text === "fulltime" ? "Toàn thời gian" : "Bán thời gian"}</>;
+      },
     },
     {
-      title: "Yêu cầu kinh nghiệm",
+      title: "Kinh nghiệm",
       dataIndex: "experience",
       key: "experience",
     },
     {},
+    {},
     {
-      title: "Địa điểm tuyển dụng",
+      title: "Địa điểm",
       dataIndex: ["location", "name"],
       key: "location",
     },

@@ -3,10 +3,7 @@ import { createContext } from "react";
 import axios from "axios";
 import adminApi from "../adminAction/AdminAction";
 import { getApiHost } from "../../config";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTJlZGEzZjQ3NzNjOTgyZmIwYjMwOCIsImlhdCI6MTY3MTcxNjc1NSwiZXhwIjoxNjcxODAzMTU1fQ.08dxF8kKLOUT-2FSNXKRwSU6SZc8ftXKv6wBobq2zSI";
 const AdminContext = createContext();
-const url = "https://xjob-mindx-production.up.railway.app/api";
 
 const AdminProvider = ({ children }) => {
   const [usersData, setUsersData] = useState([]);

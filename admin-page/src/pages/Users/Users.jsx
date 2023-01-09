@@ -147,7 +147,7 @@ const Users = () => {
         dataSource={usersData}
         onChange={onChangeTable}
         columns={columns}
-        pagination={{ defaultCurrent: 10, pageSize: 5 }}
+        pagination={{ defaultCurrent: 1, pageSize: 5 }}
       ></Table>
       <></>
     </div>
