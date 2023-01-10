@@ -37,13 +37,13 @@ const Recruiments = () => {
     setOpen(true);
     setId(id);
   };
+  // Handle Delete recruiments
   const handleOk = (id) => {
     setConfirmLoading(true);
     setTimeout(() => {
       setOpen(false);
       setConfirmLoading(false);
     }, 1000);
-
     dispatch(deleteRecruiment(token, id, reason));
   };
   const handleCancel = () => {
