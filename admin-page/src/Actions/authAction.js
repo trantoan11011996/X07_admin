@@ -13,7 +13,7 @@ export const loginAdmin = (email, password, navigate) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      getApiHost() + "users/login",
+      getApiHost() + "admin/login",
       { email, password },
       config
     );
