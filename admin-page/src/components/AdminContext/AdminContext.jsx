@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
-import adminApi from "../adminAction/AdminAction";
+import adminApi, { autoLogout } from "../adminAction/AdminAction";
 import { getApiHost } from "../../config";
+import { useNavigate } from "react-router-dom";
 const AdminContext = createContext();
 
 const AdminProvider = ({ children }) => {
@@ -11,7 +12,6 @@ const AdminProvider = ({ children }) => {
   const [fieldData, setFieldData] = useState([]);
   const [token, setToken] = useState("");
   const [detailJob, setDetailJob] = useState({});
-
   const autoGetAllUsers = () => {
     const allUsers = adminApi.autoLogin();
     if (!allUsers) {
@@ -41,6 +41,7 @@ const AdminProvider = ({ children }) => {
     setRecruimentData(allRecruiment);
     const allField = autoGetField(tokenLocal);
     setFieldData(allField);
+
   }, []);
 
   const getAllUser = async (token) => {
@@ -161,6 +162,7 @@ const AdminProvider = ({ children }) => {
     usersData,
     getAllRecruiment,
     recruimentData,
+    setRecruimentData,
     updateStatusUser,
     getAllFields,
     fieldData,

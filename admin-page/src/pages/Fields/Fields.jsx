@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Fields/fields.css";
+import { autoLogout } from "../../components/adminAction/AdminAction";
+import { useNavigate } from "react-router-dom";
 const Fields = () => {
   const { getAllFields, fieldData, setFieldData,createCategoryContext, token, setToken } =
     useContext(AdminContext);
@@ -12,10 +14,11 @@ const Fields = () => {
   const [alertExist, setAlertExist] = useState(false);
   const [succes,setSucces] = useState(false)
   const [status,setStatus] = useState("")
+  const navigate = useNavigate()
+
   useEffect(() => {
     const tokenLocal = JSON.parse(localStorage.getItem("token"));
     getAllFields(tokenLocal);
-    setToken(tokenLocal);
   }, []);
  
   const pushvalue = () => {

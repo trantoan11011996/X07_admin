@@ -56,7 +56,7 @@ export const deleteRecruiment = (token, id, reason) => async (dispatch) => {
       }
     );
     dispatch({ type: DELETE_RECRUIMENT_SUCCESS, payload: data });
-    // toast.success("Xóa lĩnh vực thành công!");
+    toast.success("Xóa tin tuyển dụng thành công!");
   } catch (error) {
     toast.error(error.response.data.message);
     dispatch({

@@ -5,22 +5,23 @@ import { Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Recruiments/recruimentTable.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RecruimentDetail from "./RecruimentDetail";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteRecruiment,
   getDetailRecuiment,
 } from "../../Actions/adminAction";
+import { autoLogout } from "../../components/adminAction/AdminAction";
 
 const Recruiments = () => {
-  const { getAllRecruiment, recruimentData, getDetailRecruiment } =
+  const { getAllRecruiment, recruimentData, getDetailRecruiment,setRecruimentData } =
     useContext(AdminContext);
   const { token } = useSelector((state) => state.auths.user);
   // const { email } = useSelector(
   //   (state) => state?.recruiment?.recruiments?.name?.info
   // );
-
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [showDetailTable, setShowDetailTable] = useState(false);
   const [reason, setReason] = useState("");
@@ -37,15 +38,23 @@ const Recruiments = () => {
     setOpen(true);
     setId(id);
   };
-  const handleOk = (id) => {
+  const handleOk = async(id) => {
     setConfirmLoading(true);
-    setTimeout(() => {
+    setTimeout(async() => {
       setOpen(false);
       setConfirmLoading(false);
     }, 1000);
-
+    getAllRecruiment(token)
     dispatch(deleteRecruiment(token, id, reason));
   };
+  useEffect(()=>{
+    const getRecruiments = async()=>{
+      const allRecruiment = await  getAllRecruiment(token)
+      console.log(allRecruiment);
+      setRecruimentData(allRecruiment)
+    }
+    getRecruiments()
+  },[id]);
   const handleCancel = () => {
     setOpen(false);
   };
