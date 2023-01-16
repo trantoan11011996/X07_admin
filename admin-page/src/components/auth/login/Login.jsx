@@ -40,6 +40,7 @@ const Login = () => {
       return toast.error("Vui lòng nhập một địa chỉ email hợp lệ !");
 
     if (email && password) {
+      
       dispatch(loginAdmin(email, password, navigate));
     }
   };
@@ -84,9 +85,6 @@ const Login = () => {
             <div className={cx("login_actions")}>
               <div className={cx("forgot_password")}>
                 <Link to={"/register"}>Quên mật khẩu ?</Link>
-              </div>
-              <div className={cx("register")}>
-                <Link to={"/register"}>Bạn chưa có tài khoản ?</Link>
               </div>
             </div>
             <div className={cx("login_btn")}>

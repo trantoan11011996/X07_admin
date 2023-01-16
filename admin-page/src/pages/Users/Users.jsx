@@ -7,6 +7,8 @@ import "../Users/userTable.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Column from "antd/es/table/Column";
+import { ToastContainer, toast } from "react-toastify";
+import { autoLogout } from "../../components/adminAction/AdminAction";
 
 const Users = () => {
   const { getAllUser, usersData, updateStatusUser, token, setToken } =
@@ -15,6 +17,7 @@ const Users = () => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const tokenLocal = JSON.parse(localStorage.getItem("token"));
@@ -27,8 +30,13 @@ const Users = () => {
   const hanldeUpdateStatus = (e, id) => {
     updateStatusUser(e.target.value, id);
     setStatus(e.target.value);
-    console.log(token);
     getAllUser(token);
+    if(e.target.value==="locked"){
+      return toast.success("Khóa thành công ")
+    }
+    if(e.target.value==="active"){
+      return toast.success("Mở khóa thành công")
+    }
   };
 
   const handleUpdateUser = (id) => {};
@@ -106,12 +114,6 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           <button
-            className="btn btn-update"
-            onClick={() => handleUpdateUser(record._id)}
-          >
-            Cập nhật
-          </button>
-          <button
             className="btn btn-locked"
             value="locked"
             onClick={(e) => hanldeUpdateStatus(e, record._id)}
@@ -136,21 +138,23 @@ const Users = () => {
     console.log("sorter", sorter);
   };
   return (
-    <div className="user-table">
-      <div className="user-table-btn">
-        <Link to="/createAdmin">
-          <button className="add-user">Thêm mới</button>
-        </Link>
+    <>
+    <ToastContainer/>
+      <div className="user-table">
+        <div className="user-table-btn">
+          <Link to="/createAdmin">
+            <button className="add-user">Thêm mới</button>
+          </Link>
+        </div>
+        <Table
+          className="table-antd"
+          dataSource={usersData}
+          onChange={onChangeTable}
+          columns={columns}
+          pagination={{ defaultCurrent: 1, pageSize: 5 }}
+        ></Table>
       </div>
-      <Table
-        className="table-antd"
-        dataSource={usersData}
-        onChange={onChangeTable}
-        columns={columns}
-        pagination={{ defaultCurrent: 1, pageSize: 5 }}
-      ></Table>
-      <></>
-    </div>
+    </>
   );
 };
 

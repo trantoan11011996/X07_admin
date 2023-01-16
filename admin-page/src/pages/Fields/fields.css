@@ -94,6 +94,11 @@
     text-align: center;
     margin-top: 5px;
 }
+.modal-header-field{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 400;
+}
 @keyframes showModal {
   from {
     transform: translateY(-100%);
