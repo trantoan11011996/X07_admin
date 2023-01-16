@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.06be0c0d.css",
-    "main.js": "/static/js/main.743d898f.js",
-    "static/media/bg.jpg": "/static/media/bg.2df8cdffc26b762d2fdc.jpg",
-    "static/media/XCAREERBUILDER_free-file.png": "/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
-    "index.html": "/index.html",
-    "main.06be0c0d.css.map": "/static/css/main.06be0c0d.css.map",
-    "main.743d898f.js.map": "/static/js/main.743d898f.js.map"
+    "main.css": "/X07-admin/static/css/main.3a3023b8.css",
+    "main.js": "/X07-admin/static/js/main.0bf8f5f8.js",
+    "static/media/bg.jpg": "/X07-admin/static/media/bg.2df8cdffc26b762d2fdc.jpg",
+    "static/media/XCAREERBUILDER_free-file.png": "/X07-admin/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
+    "index.html": "/X07-admin/index.html",
+    "main.3a3023b8.css.map": "/X07-admin/static/css/main.3a3023b8.css.map",
+    "main.0bf8f5f8.js.map": "/X07-admin/static/js/main.0bf8f5f8.js.map"
   },
   "entrypoints": [
-    "static/css/main.06be0c0d.css",
-    "static/js/main.743d898f.js"
+    "static/css/main.3a3023b8.css",
+    "static/js/main.0bf8f5f8.js"
   ]
 }
