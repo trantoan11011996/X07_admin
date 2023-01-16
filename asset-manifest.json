@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/admin/static/css/main.f90c8770.css",
-    "main.js": "/admin/static/js/main.19d8cd0f.js",
-    "static/media/bg.jpg": "/admin/static/media/bg.2df8cdffc26b762d2fdc.jpg",
-    "static/media/XCAREERBUILDER_free-file.png": "/admin/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
-    "index.html": "/admin/index.html",
-    "main.f90c8770.css.map": "/admin/static/css/main.f90c8770.css.map",
-    "main.19d8cd0f.js.map": "/admin/static/js/main.19d8cd0f.js.map"
+    "main.css": "/X07-admin/static/css/main.3a3023b8.css",
+    "main.js": "/X07-admin/static/js/main.0bf8f5f8.js",
+    "static/media/bg.jpg": "/X07-admin/static/media/bg.2df8cdffc26b762d2fdc.jpg",
+    "static/media/XCAREERBUILDER_free-file.png": "/X07-admin/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
+    "index.html": "/X07-admin/index.html",
+    "main.3a3023b8.css.map": "/X07-admin/static/css/main.3a3023b8.css.map",
+    "main.0bf8f5f8.js.map": "/X07-admin/static/js/main.0bf8f5f8.js.map"
   },
   "entrypoints": [
-    "static/css/main.f90c8770.css",
-    "static/js/main.19d8cd0f.js"
+    "static/css/main.3a3023b8.css",
+    "static/js/main.0bf8f5f8.js"
   ]
 }
