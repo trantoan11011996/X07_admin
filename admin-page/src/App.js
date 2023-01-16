@@ -1,6 +1,6 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,HashRouter } from "react-router-dom";
 
 import { AdminProvider } from "./components/AdminContext/AdminContext";
 import { AuthContext } from "./components/AdminContext/Context";
@@ -12,7 +12,7 @@ function App() {
   return (
     <AuthContext.Provider>
       <AdminProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             {publicRoute.map((route, index) => {
               const Page = route.component;
@@ -30,7 +30,7 @@ function App() {
               );
             })}
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </AdminProvider>
     </AuthContext.Provider>
   );

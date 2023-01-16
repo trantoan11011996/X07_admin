@@ -14,7 +14,7 @@ const Dashboard = () => {
   }, [isAuthenticated]);
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Quản lí dành cho Admin</h1>
     </div>
   );
 };

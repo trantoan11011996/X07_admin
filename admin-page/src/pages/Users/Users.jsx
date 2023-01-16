@@ -114,12 +114,6 @@ const Users = () => {
       render: (_, record) => (
         <Space size="middle">
           <button
-            className="btn btn-update"
-            onClick={() => handleUpdateUser(record._id)}
-          >
-            Cập nhật
-          </button>
-          <button
             className="btn btn-locked"
             value="locked"
             onClick={(e) => hanldeUpdateStatus(e, record._id)}

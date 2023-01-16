@@ -15,9 +15,9 @@ const Sidebar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const {getAllUser} = useContext(AdminContext)
   const navigate = useNavigate()
+  const token = JSON.parse(localStorage.getItem("token"))
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("currentAdmin"))
-    const token = JSON.parse(localStorage.getItem("token"))
     const getUsers = async()=>{
       const users = await getAllUser(token)
       const resultUser = users.filter(item=>item.email===user.email)
@@ -30,7 +30,7 @@ const Sidebar = ({ children }) => {
   },[])
   return (
     <>
-    <MetaData title="Dashboard"/>
+    <MetaData title="Trang quản lí"/>
       <Header />
       <div className={cx("container")}>
         <div
@@ -38,12 +38,12 @@ const Sidebar = ({ children }) => {
           className={cx("sidebar")}
         >
           <div className={cx("top_section")}>
-            <h1
+            {/* <h1
               style={{ display: isOpen ? "block" : "none" }}
               className={cx("logo")}
             >
               Logo
-            </h1>
+            </h1> */}
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}
               className={cx("bars")}

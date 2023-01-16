@@ -14,15 +14,20 @@ export const createCategory = (category)=>{
    const newCategory = {"name" : category}
    return newCategory
 }
+export const updateCategory = (name)=>{
+   const category = {"name"  : name}
+   return category
+}
 export const autoLogout = ()=>{
    localStorage.clear()
 }
- const adminApi = {
+ const adminAction = {
     autoLogin : autoLogin,
     autoGetRecruiment:autoGetRecruiment,
     autoGetFields : autoGetFields,
     createCategory : createCategory,
-    autoLogout: autoLogout
+    autoLogout: autoLogout,
+    updateCategory : updateCategory
  }
 
- export default adminApi
+ export default adminAction

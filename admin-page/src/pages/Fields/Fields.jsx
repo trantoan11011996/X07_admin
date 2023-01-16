@@ -6,21 +6,35 @@ import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Fields/fields.css";
 import { autoLogout } from "../../components/adminAction/AdminAction";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 const Fields = () => {
-  const { getAllFields, fieldData, setFieldData,createCategoryContext, token, setToken } =
-    useContext(AdminContext);
+  const {
+    getAllFields,
+    fieldData,
+    setFieldData,
+    createCategoryContext,
+    token,
+    setToken,
+    updateCategory
+  } = useContext(AdminContext);
   const [toggleModal, setToggleModal] = useState(false);
+  const [toggleModalUpdate, setToggleModalUpdate] = useState(false);
+
   const [category, setCategory] = useState("");
+  const [categoryUpdate, setCategoryUpdate] = useState("");
+
   const [alertExist, setAlertExist] = useState(false);
-  const [succes,setSucces] = useState(false)
-  const [status,setStatus] = useState("")
-  const navigate = useNavigate()
+  const [succes, setSucces] = useState(false);
+  const [succesUpdate, setSuccesUpdate] = useState(false);
+  const [idCateogory,setIdCategory] = useState("")
+  const [status, setStatus] = useState("");
+  const navigate = useNavigate();
+  const tokenLocal = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
-    const tokenLocal = JSON.parse(localStorage.getItem("token"));
     getAllFields(tokenLocal);
   }, []);
- 
+
   const pushvalue = () => {
     let nameCategoryList = [];
     for (let item of fieldData) {
@@ -34,9 +48,39 @@ const Fields = () => {
   const handleToggleModal = () => {
     setToggleModal(true);
   };
+  const handleToggleModalUpdate = (id) => {
+    setToggleModalUpdate(true);
+    setIdCategory(id)
+  };
   const handleCloseModal = () => {
     setToggleModal(false);
-    setSucces(false)
+    setSucces(false);
+  };
+
+  const handleCloseModalUpdate = () => {
+    setToggleModalUpdate(false);
+    setSuccesUpdate(false);
+  };
+
+  const handleUpdateCategory = (e,id) => {
+    e.preventDefault();
+    setCategoryUpdate(" ");
+    setAlertExist(false);
+    setToggleModalUpdate(false);
+    setSuccesUpdate(true);
+    updateCategory(id,tokenLocal,categoryUpdate);
+    setTimeout(() => {
+      const getData = async () => {
+        const data = await getAllFields(tokenLocal);
+        console.log('data',data);
+        return data
+      };
+      getData();
+    }, 800);
+    setToken(tokenLocal);
+    setTimeout(()=>{
+       toast.success("Cập nhật lĩnh vực thành công")
+    },500)
   };
 
   const handleCreateCategory = (e) => {
@@ -44,23 +88,25 @@ const Fields = () => {
     const categoryList = pushvalue();
     if (categoryList.includes(category.toLocaleLowerCase())) {
       setAlertExist(true);
-      setSucces(false)
+      setSucces(false);
       return;
     }
     setCategory(" ");
     setAlertExist(false);
-    setSucces(true)
-    setStatus(category)
-    createCategoryContext(category,token)
+    setSucces(true);
+    setStatus(category);
     const tokenLocal = JSON.parse(localStorage.getItem("token"));
+    createCategoryContext(category, tokenLocal);
+    setTimeout(() => {
+      const getData = async () => {
+        const data = await getAllFields(tokenLocal);
+      };
+      getData();
+    }, 800);
+    setToken(tokenLocal);
     setTimeout(()=>{
-      const getData = async()=>{
-        const data = await getAllFields(tokenLocal)
-     };
-     getData()
-    },800)
-    
-    setToken(tokenLocal)
+       toast.success("Thêm mới lĩnh vực thành công")
+    },500)
   };
   const columns = [
     {
@@ -76,14 +122,15 @@ const Fields = () => {
       width: 80,
       render: (_, record) => (
         <Space size="middle">
-          <button className="btn btn-delete-field">Xóa</button>
-          <button className="btn btn-update-field">Cập nhật</button>
+          <button className="btn btn-update-field" onClick={()=>handleToggleModalUpdate(record._id)}>Cập nhật</button>
         </Space>
       ),
     },
   ];
   return (
-    <div className="table-fields">
+    <>
+    <ToastContainer/>
+     <div className="table-fields">
       <div className="field-table-btn">
         <button className="add-field" onClick={() => handleToggleModal()}>
           Thêm mới
@@ -104,6 +151,9 @@ const Fields = () => {
                 onClick={() => handleCloseModal()}
               />
             </div>
+            <div className="modal-header-field">
+              <p className="">Tạo mới lĩnh vực</p>
+            </div>
             <form className="form-add-category" onSubmit={handleCreateCategory}>
               <input
                 className="form-input-category"
@@ -117,21 +167,57 @@ const Fields = () => {
               </button>
             </form>
             {alertExist && (
-                <p className="alert-exist">
-                  Tên lĩnh vực đã tồn tại, hãy nhập lại!
-                </p>
-              )}
-              {succes && (
-                <p className="alert-succes">
-                  Đã tạo lĩnh vực, kiểm tra lại dữ liệu
-                </p>
-              )}
+              <p className="alert-exist">
+                Tên lĩnh vực đã tồn tại, hãy nhập lại!
+              </p>
+            )}
+            {succes && (
+              <p className="alert-succes">
+                Đã tạo lĩnh vực, kiểm tra lại dữ liệu
+              </p>
+            )}
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {toggleModalUpdate ? (
+        <div className="modal-overlay">
+          <div className={toggleModalUpdate ? "open-modal" : "modal-container"}>
+            <div className="wrap-close-modal">
+              <AiOutlineClose
+                className="icon-close-modal"
+                onClick={() => handleCloseModalUpdate()}
+              />
+            </div>
+            <div className="modal-header-field">
+              <p className="">Cập nhật tên lĩnh vực</p>
+            </div>
+            <form className="form-add-category" onSubmit={(e)=>handleUpdateCategory(e,idCateogory)}>
+              <input
+                className="form-input-category"
+                type="text"
+                value={categoryUpdate}
+                placeholder="Cập nhật lĩnh vực..."
+                onChange={(e) => setCategoryUpdate(e.target.value)}
+              ></input>
+              <button className="btn-add-category" type="submit">
+                Cập nhật
+              </button>
+            </form>
+            {succes && (
+              <p className="alert-succes">
+                Đã cập nhật lĩnh vực, kiểm tra lại dữ liệu
+              </p>
+            )}
           </div>
         </div>
       ) : (
         <></>
       )}
     </div>
+    </>
+   
   );
 };
 

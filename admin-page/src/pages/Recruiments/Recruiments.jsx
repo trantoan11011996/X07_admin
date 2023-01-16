@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Space, Table,Modal } from 'antd';
+import Highlighter from 'react-highlight-words';
 
-import { Button, Modal } from "antd";
-import { Space, Table, Tag } from "antd";
 import { useContext } from "react";
 import { AdminContext } from "../../components/AdminContext/AdminContext";
 import "../Recruiments/recruimentTable.css";
@@ -12,101 +13,207 @@ import {
   deleteRecruiment,
   getDetailRecuiment,
 } from "../../Actions/adminAction";
-import { autoLogout } from "../../components/adminAction/AdminAction";
+import { getApiHostUser } from "../../config";
+import { toast, ToastContainer } from "react-toastify";
 
 const Recruiments = () => {
-  const { getAllRecruiment, recruimentData, getDetailRecruiment,setRecruimentData } =
-    useContext(AdminContext);
+  const {
+    getAllRecruiment,
+    recruimentData,
+    getDetailRecruiment,
+    setRecruimentData,
+    deleteRecruiment
+  } = useContext(AdminContext);
   const { token } = useSelector((state) => state.auths.user);
-  // const { email } = useSelector(
-  //   (state) => state?.recruiment?.recruiments?.name?.info
-  // );
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showDetailTable, setShowDetailTable] = useState(false);
   const [reason, setReason] = useState("");
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState("")
   useEffect(() => {
     const tokenLocal = JSON.parse(localStorage.getItem("token"));
     getAllRecruiment(tokenLocal);
   }, []);
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText('');
+    handleSearch("","","")
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? '#1890ff' : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+    searchedColumn === dataIndex ? (
+      <Highlighter
+        highlightStyle={{
+          backgroundColor: '#ffc069',
+          padding: 0,
+        }}
+        searchWords={[searchText]}
+        autoEscape
+        textToHighlight={text ? text.toString() : ''}
+      />
+    ) : (
+      text
+    ),
+  });
 
+  const getlocalToken = JSON.parse(localStorage.getItem("token"));
   const showModal = (id) => {
-    dispatch(getDetailRecuiment(token, id));
     setOpen(true);
-    setId(id);
+    setId(id)
   };
-  const handleOk = async(id) => {
+  const handleOk = async (id) => {
     setConfirmLoading(true);
-    setTimeout(async() => {
-      setOpen(false);
+    await deleteRecruiment(getlocalToken,id,reason)
+    setTimeout(()=>{
       setConfirmLoading(false);
-    }, 1000);
-    getAllRecruiment(token)
-    dispatch(deleteRecruiment(token, id, reason));
-  };
-  useEffect(()=>{
-    const getRecruiments = async()=>{
-      const allRecruiment = await  getAllRecruiment(token)
-      console.log(allRecruiment);
-      setRecruimentData(allRecruiment)
-    }
-    getRecruiments()
-  },[id]);
+    },300)
+    setTimeout(()=>{
+        toast.success("Xóa tin tuyển dụng thành công")
+    },300)
+    getAllRecruiment(getlocalToken)
+    setOpen(false);
+    setReason("")
+};
+  
   const handleCancel = () => {
     setOpen(false);
   };
+
   const columns = [
     {
       title: "Tiêu đề tin",
       dataIndex: "title",
       key: "title",
+      ...getColumnSearchProps("title"),
     },
     {
       title: "Tên công ty",
       dataIndex: ["name", "info", "name"],
+      key: "nameCompany",
+    },
+    {
+      title: "Lĩnh vực tuyển dụng",
+      dataIndex: ["category", "name"],
       key: "name",
+      onFilter: (value, record) => record.name.startsWith(value),
+      filterSearch: true,
     },
     {
-      title: "Mức lương",
-      dataIndex: "salary",
-      key: "salary",
-    },
-    {
-      title: "Nhu cầu",
-      dataIndex: "numberApplicant",
-      width: 50,
-      key: "numberApplicant",
-      // render : (text)=>{
-      //   let txtToNumb = text.toString()
-      //   return(
-      //     <></>
-      //     // <p>{txtToNumb}</p>
-      //   )
-      // }
+      title: "Trạng thái tin",
+      dataIndex: "status",
+      key: "status",
+      render: (text) => {
+        return (
+          <>
+            {text === "extended" && "Đã gia hạn"}
+            {text === "active" && "Đang hoạt động"}
+            {text === "expire" && "Hết hạn"}
+            {text === "pending" && "Đang chờ duyệt"}
+          </>
+        );
+      },
+    filters:[
+      {
+        text : "active",
+        value : "active"
+      },
+      {
+        text : "extended",
+        value : "extended"
+      },
+      {
+        text : "pendingt",
+        value : "pending"
+      },
+      {
+        text : "expire",
+        value : "expire"
+      }
+    ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
     {
       title: "Vị trí",
       dataIndex: "position",
       key: "position",
+      ...getColumnSearchProps("position"),
     },
-    {
-      title: "Hình thức làm việc",
-      dataIndex: "type",
-      key: "type",
-      render: (text) => {
-        return <>{text === "fulltime" ? "Toàn thời gian" : "Bán thời gian"}</>;
-      },
-    },
-    {
-      title: "Kinh nghiệm",
-      dataIndex: "experience",
-      key: "experience",
-    },
-    {},
-    {},
     {
       title: "Địa điểm",
       dataIndex: ["location", "name"],
@@ -149,14 +256,14 @@ const Recruiments = () => {
           >
             Xóa
           </button>
-          <Link to={"/recruimentDetail/" + record._id}>
+          {/* <Link to={"/recruimentDetail/" + record._id}>
             <button
               className="btn btn-detail"
               onClick={() => handleGetDetail(record._id)}
             >
               Xem chi tiết
             </button>
-          </Link>
+          </Link> */}
         </Space>
       ),
     },
@@ -167,6 +274,8 @@ const Recruiments = () => {
     setShowDetailTable(true);
   };
   return (
+    <>
+    <ToastContainer/>
     <div className="table-recruiment">
       <Table
         className="table-antd"
@@ -181,6 +290,7 @@ const Recruiments = () => {
         onOk={() => handleOk(id)}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
+        
       >
         <div className="reason">
           <input
@@ -192,6 +302,8 @@ const Recruiments = () => {
         </div>
       </Modal>
     </div>
+    </>
+    
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
-import adminApi, { autoLogout } from "../adminAction/AdminAction";
+import adminAction, { autoLogout } from "../adminAction/AdminAction";
 import { getApiHost } from "../../config";
 import { useNavigate } from "react-router-dom";
 const AdminContext = createContext();
@@ -13,21 +13,21 @@ const AdminProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [detailJob, setDetailJob] = useState({});
   const autoGetAllUsers = () => {
-    const allUsers = adminApi.autoLogin();
+    const allUsers = adminAction.autoLogin();
     if (!allUsers) {
       return;
     }
     return allUsers;
   };
   const autoGetAllRecruiment = () => {
-    const allRecruiment = adminApi.autoGetRecruiment();
+    const allRecruiment = adminAction.autoGetRecruiment();
     if (!allRecruiment) {
       return;
     }
     return allRecruiment;
   };
   const autoGetField = () => {
-    const allField = adminApi.autoGetFields();
+    const allField = adminAction.autoGetFields();
     if (!allField) {
       return;
     }
@@ -55,6 +55,7 @@ const AdminProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
+        console.log('data',data);
         setUsersData(data);
         localStorage.setItem("allUsers", JSON.stringify(data));
         return data;
@@ -72,9 +73,10 @@ const AdminProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
-        setRecruimentData(data.recruiment);
-        localStorage.setItem("allRecruiment", JSON.stringify(data.recruiment));
-        return data.recruiment;
+        console.log(data);
+        setRecruimentData(data);
+        localStorage.setItem("allRecruiment", JSON.stringify(data));
+        return data;
       });
     return getRecruiments;
   };
@@ -82,7 +84,6 @@ const AdminProvider = ({ children }) => {
     const statusJson = {
       status: status,
     };
-    console.log(statusJson, id);
     const updateStatus = await fetch(getApiHost() + `admin/users/${id}`, {
       method: "PUT",
       body: JSON.stringify(statusJson),
@@ -122,7 +123,7 @@ const AdminProvider = ({ children }) => {
   };
 
   const createCategoryContext = async (category, token) => {
-    const newCategory = adminApi.createCategory(category);
+    const newCategory = adminAction.createCategory(category);
     const fetchApiCateory = await fetch(getApiHost() + `admin/category`, {
       method: "POST",
       body: JSON.stringify(newCategory),
@@ -136,6 +137,29 @@ const AdminProvider = ({ children }) => {
         return res.json();
       })
       .then((data) => {
+        console.log("data",data);
+        return data;
+      });
+    return fetchApiCateory;
+  };
+
+  const updateCategory = async (id, token,name) => {
+    const newCategory = adminAction.updateCategory(name)
+    console.log('new',newCategory);
+    const fetchApiCateory = await fetch(getApiHost() + `admin/category/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(newCategory),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log("data",data);
         return data;
       });
     return fetchApiCateory;
@@ -157,6 +181,24 @@ const AdminProvider = ({ children }) => {
       });
     return detailRecruiment;
   };
+
+  const deleteRecruiment = async(token,id,reason)=>{
+    const reasonDelete = {"reason" : reason}
+   
+    const deleteRcm = await fetch(getApiHost() + `admin/recruiments/${id}`,{
+      method : "DELETE",
+      body : JSON.stringify(reasonDelete),
+      headers:{
+        "authorization" : `Bearer ${token}`
+      }
+    }).then((res)=>{
+      return res.json()
+    }).then((result)=>{
+      console.log(result);
+      return result
+    })
+    return deleteRcm
+  }
   const value = {
     getAllUser,
     usersData,
@@ -173,6 +215,8 @@ const AdminProvider = ({ children }) => {
     getDetailRecruiment,
     detailJob,
     setDetailJob,
+    deleteRecruiment,
+    updateCategory
   };
   return (
     <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
