@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/admin/static/css/main.f90c8770.css",
-    "main.js": "/admin/static/js/main.c7662d9e.js",
+    "main.js": "/admin/static/js/main.4c62da5a.js",
     "static/media/bg.jpg": "/admin/static/media/bg.2df8cdffc26b762d2fdc.jpg",
     "static/media/XCAREERBUILDER_free-file.png": "/admin/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
     "index.html": "/admin/index.html",
     "main.f90c8770.css.map": "/admin/static/css/main.f90c8770.css.map",
-    "main.c7662d9e.js.map": "/admin/static/js/main.c7662d9e.js.map"
+    "main.4c62da5a.js.map": "/admin/static/js/main.4c62da5a.js.map"
   },
   "entrypoints": [
     "static/css/main.f90c8770.css",
-    "static/js/main.c7662d9e.js"
+    "static/js/main.4c62da5a.js"
   ]
 }
