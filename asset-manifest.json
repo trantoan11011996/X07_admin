@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/X07-admin/static/css/main.3a3023b8.css",
-    "main.js": "/X07-admin/static/js/main.0bf8f5f8.js",
-    "static/media/bg.jpg": "/X07-admin/static/media/bg.2df8cdffc26b762d2fdc.jpg",
-    "static/media/XCAREERBUILDER_free-file.png": "/X07-admin/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
-    "index.html": "/X07-admin/index.html",
-    "main.3a3023b8.css.map": "/X07-admin/static/css/main.3a3023b8.css.map",
-    "main.0bf8f5f8.js.map": "/X07-admin/static/js/main.0bf8f5f8.js.map"
+    "main.css": "/X07_admin/static/css/main.65b148e4.css",
+    "main.js": "/X07_admin/static/js/main.509a92f7.js",
+    "static/media/bg.jpg": "/X07_admin/static/media/bg.2df8cdffc26b762d2fdc.jpg",
+    "static/media/XCAREERBUILDER_free-file.png": "/X07_admin/static/media/XCAREERBUILDER_free-file.1f5d590a0be0bfde5e4f.png",
+    "index.html": "/X07_admin/index.html",
+    "main.65b148e4.css.map": "/X07_admin/static/css/main.65b148e4.css.map",
+    "main.509a92f7.js.map": "/X07_admin/static/js/main.509a92f7.js.map"
   },
   "entrypoints": [
-    "static/css/main.3a3023b8.css",
-    "static/js/main.0bf8f5f8.js"
+    "static/css/main.65b148e4.css",
+    "static/js/main.509a92f7.js"
   ]
 }
